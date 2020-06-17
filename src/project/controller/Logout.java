@@ -16,15 +16,12 @@ import javax.servlet.http.HttpServletResponse;
         @WebInitParam(name = "LOGIN_PATH", value = "/project")
     }
 )
-@ServletSecurity(
-		@HttpConstraint(rolesAllowed = {"member"})
-)
 public class Logout extends HttpServlet {
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response) 
                           throws ServletException, IOException {
-//        request.getSession().invalidate();
-    	request.logout(); 
+        request.getSession().invalidate();
+//    	request.logout();
         response.sendRedirect(getInitParameter("LOGIN_PATH"));
     }
 }

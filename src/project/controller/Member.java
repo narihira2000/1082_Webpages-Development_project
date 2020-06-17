@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import project.model.*;
+import project.web.OnlineUser;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.ServletSecurity;
@@ -44,6 +46,7 @@ public class Member extends HttpServlet {
         List<Message> messages = userService.messages(getUsername(request));
         
         request.setAttribute("messages", messages);
+        request.setAttribute("onlineUser",OnlineUser.counter);
         request.getRequestDispatcher(getInitParameter("MEMBER_PATH")).forward(request, response);
     }
 

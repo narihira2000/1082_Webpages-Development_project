@@ -16,7 +16,7 @@
 	 		
 	 	<ul class="navbar-nav">
 			<li class="nav-item">
-	 			<a class="nav-link" href=logout>Home</a>
+	 			<a class="nav-link" href="logout">Home</a>
 	 		</li>
 	 	
 	 		<li class="nav-item">
@@ -26,7 +26,7 @@
 	 		
 	 	</ul>
 	 	
-	 	<span style="color:white; " class="nav-item">Hi, ${sessionScope.login}</span>
+	 	<span style="color:white; " class="nav-item">Online:${requestScope.onlineUser} people  Hi, ${sessionScope.login}</span>
 	</nav>
 	<br>
 	<br>
