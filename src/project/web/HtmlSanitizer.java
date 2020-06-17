@@ -21,9 +21,8 @@ public class HtmlSanitizer extends HttpFilter {
     @Override
     public void init() throws ServletException {
         policy = new HtmlPolicyBuilder()
-                    .allowElements("a", "b", "i", "del", "pre", "code")
+                    .allowElements("b", "i", "del", "pre", "code")
                     .allowUrlProtocols("http", "https")
-                    .allowAttributes("href").onElements("a")
                     .requireRelNofollowOnLinks()
                     .toFactory();
     }

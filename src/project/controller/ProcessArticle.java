@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import project.model.*;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
     initParams = {
         @WebInitParam(name = "ARTICLE_PATH", value = "article")
     }
+)
+@ServletSecurity(
+		@HttpConstraint(rolesAllowed = {"member"})
 )
 public class ProcessArticle extends HttpServlet {
     

@@ -31,12 +31,16 @@ public class AccountDAOJdbcImpl implements AccountDAO{
 		System.out.print(username+"\n"+email+"\n"+password+"\n"+salt);
 //		jdbcTemplate.update("INSERT INTO user(username,email,password,salt) VALUES("+username+","+email+","+password+","+salt+")");
 		try(Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement("INSERT INTO user(username,email,password,salt) VALUES(?,?,?,?)")){
+				PreparedStatement stmt = conn.prepareStatement("INSERT INTO user(username,email,password,salt) VALUES(?,?,?,?)");
+				PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO user_role(username,role) VALUES(?,'member')")){
 					stmt.setString(1, acct.getName());
 					stmt.setString(2, acct.getEmail());
 					stmt.setString(3, acct.getPassword());
 					stmt.setString(4, acct.getSalt());
 					stmt.executeUpdate();
+					
+					stmt2.setString(1, acct.getName());
+					stmt2.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

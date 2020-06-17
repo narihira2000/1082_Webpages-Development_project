@@ -4,6 +4,8 @@ import project.model.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -28,14 +30,16 @@ public class Login extends HttpServlet {
         String password = request.getParameter("password");
         
         UserService userService = (UserService) getServletContext().getAttribute("userService");
+        Optional<String> optionalPasswd = userService.encryptedPassword(username,password);
 
-        if(userService.login(username, password)) {
+        try {
+        	request.login(username, optionalPasswd.get());
             if(request.getSession(false) != null) {
                 request.changeSessionId();
             }
             request.getSession().setAttribute("login", username);
             response.sendRedirect(getInitParameter("SUCCESS_PATH"));
-        } else {
+        } catch(NoSuchElementException | ServletException e) {
             request.setAttribute("errors", Arrays.asList("登入失敗"));
             List<Message> newest = userService.newestMessages(10);
         	request.setAttribute("newest", newest);

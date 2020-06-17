@@ -89,5 +89,15 @@ public class UserService {
     public List<Message> newestMessages(int n){
     	return messageDAO.newestMessages(n);
     }
+
+	public Optional<String> encryptedPassword(String username, String password) {
+		Optional<Account> optionalAcct = acctDAO.accountBy(username);
+        if(optionalAcct.isPresent()) {
+            Account acct = optionalAcct.get();
+            int salt = Integer.parseInt(acct.getSalt());
+            return Optional.of(String.valueOf(password.hashCode() + salt));
+        }
+        return Optional.empty();
+	}
 }
 

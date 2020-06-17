@@ -7,4 +7,10 @@
 		password="admin"
 		driverClassName="org.h2.Driver"
 		url="jdbc:h2:tcp://localhost/c:/workspace/project/data" />
+		
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+		localDataSource="true"
+		dataSourceName="jdbc/data"
+       	userTable="user" userNameCol="username" userCredCol="password"
+   		userRoleTable="user_role" roleNameCol="role"/>
 </Context>
