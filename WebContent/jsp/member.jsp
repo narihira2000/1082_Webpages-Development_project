@@ -82,6 +82,7 @@
 							<h6>${message.content}</h6><br>
 							<form method='post' action='del_message'>
 		                        <input type='hidden' name='millis' value='${message.millis}'>
+		                        <input type='hidden' name='ID' value='${message.ID}'>
 		                        <button type="submit" class="btn btn-danger" style="float: right;">delete post</button>
 		                    </form>
 						</div>

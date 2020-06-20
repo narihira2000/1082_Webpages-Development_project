@@ -16,18 +16,53 @@ public class UserService {
         this.replyDAO = replyDAO;
     }
 
-    public void tryCreateUser(String email, String username, String password)  {
-        if(!acctDAO.accountBy(username).isPresent()) {
-            createUser(username, email, password);
+    public Optional<Account> tryCreateUser(String email, String username, String password)  {
+        if(isUserExist(username) || isEmailExist(email)) {
+            return Optional.empty();
         }
+        return Optional.of(createUser(username, email, password));
+    }
+    
+    public boolean isUserExist(String username) {
+    	return acctDAO.accountBy(username).isPresent();
+    }
+    
+    public boolean isEmailExist(String email) {
+    	return acctDAO.accountByEmail(email).isPresent();
+    }
+    
+    public Optional<Account> accountByEmail(String email){
+    	Optional<Account> optionalAcct= acctDAO.accountByEmail(email);
+    	if(optionalAcct.isPresent()) {
+    		return optionalAcct;
+    	}
+    	return Optional.empty();
+    }
+    
+    public void resetPassword(String email, String password) {
+    	int salt = (int) (Math.random() * 100);
+        int encrypt = salt + password.hashCode();
+        acctDAO.updatePasswordSalt(email, String.valueOf(encrypt), String.valueOf(salt));
     }
 
-    private void createUser(String username, String email, String password) {
+    private Account createUser(String username, String email, String password) {
         int salt = (int) (Math.random() * 100);
         int encrypt = salt + password.hashCode();
-        acctDAO.createAccount(
-                new Account(username, email, 
-                        String.valueOf(encrypt), String.valueOf(salt)));
+        Account acct = new Account(username, email,String.valueOf(encrypt), String.valueOf(salt));
+        acctDAO.createAccount(acct);
+        return acct;
+    }
+    
+    public Optional<Account> verify(String email, String token) {
+        Optional<Account> optionalAcct= acctDAO.accountByEmail(email);
+        if(optionalAcct.isPresent()) {
+            Account acct = optionalAcct.get();
+            if(acct.getPassword().equals(token)) {
+                acctDAO.activateAccount(acct);
+                return Optional.of(acct);
+            }
+        }
+        return Optional.empty();
     }
 
     public boolean login(String username, String password) {
@@ -62,8 +97,8 @@ public class UserService {
                         username, Instant.now().toEpochMilli(), title, content, 0));
     }    
     
-    public void deleteMessage(String username, String millis) {
-        messageDAO.deleteMessageBy(username, millis);
+    public void deleteMessage(String username, String millis, int ID) {
+        messageDAO.deleteMessageBy(username, millis, ID);
     }
     
     public List<Reply> reply(int id) {

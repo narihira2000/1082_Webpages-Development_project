@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(
-    urlPatterns={"/del_message"}, 
+    urlPatterns={"/del_reply"}, 
     initParams={
-        @WebInitParam(name = "MEMBER_PATH", value = "member")
+        @WebInitParam(name = "ARTICLE_PATH", value = "article")
     }
 )
 @ServletSecurity(
 		@HttpConstraint(rolesAllowed = {"member"})
 )
-public class DelMessage extends HttpServlet {    
+public class DelReply extends HttpServlet {    
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,10 +29,10 @@ public class DelMessage extends HttpServlet {
         
         if(millis != null) {
             UserService userService = (UserService) getServletContext().getAttribute("userService");
-            userService.deleteMessage(getUsername(request), millis, ID);
+            userService.deleteReply(getUsername(request), millis, ID);
         }
         
-        response.sendRedirect(getInitParameter("MEMBER_PATH"));
+        response.sendRedirect(getInitParameter("ARTICLE_PATH"));
     }
     
     private String getUsername(HttpServletRequest request) {

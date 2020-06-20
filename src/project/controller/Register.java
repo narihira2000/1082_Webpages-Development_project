@@ -4,6 +4,7 @@ import project.model.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -59,7 +60,15 @@ public class Register extends HttpServlet {
             path = getInitParameter("SUCCESS_PATH");
             
             UserService userService = (UserService) getServletContext().getAttribute("userService");
-            userService.tryCreateUser(email, username, password);
+            EmailService emailService = (EmailService) getServletContext().getAttribute("emailService");
+            Optional<Account> optionalAcct = userService.tryCreateUser(email, username, password);
+            if(optionalAcct.isPresent()) {
+            	emailService.validationLink(optionalAcct.get());
+            }
+            else {
+            	emailService.failedRegistration(username,email);
+            }
+            
         } else {
             path = getInitParameter("FORM_PATH");
             request.setAttribute("errors", errors);

@@ -71,14 +71,19 @@ public class MessageDAOJdbcImpl implements MessageDAO{
 	}
 	
 	@Override
-	public void deleteMessageBy (String username, String millis) {
+	public void deleteMessageBy (String username, String millis, int ID) {
 //		jdbcTemplate.update("DELETE FROM message WHERE username = "+username+" AND time = " + millis);
 
 		try (Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement("DELETE FROM message WHERE username = ? AND time = ?")){
+				PreparedStatement stmt = conn.prepareStatement("DELETE FROM message WHERE username = ? AND time = ?");
+				PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM reply WHERE message_id = ?")){
 			stmt.setString (1, username); 
 			stmt.setLong (2, Long.parseLong (millis)); 
-			stmt.executeUpdate(); 
+			
+			stmt2.setInt(1, ID);
+			
+			stmt.executeUpdate();
+			stmt2.executeUpdate();
 		} catch (SQLException e) { 
 			throw new RuntimeException (e);
 		}

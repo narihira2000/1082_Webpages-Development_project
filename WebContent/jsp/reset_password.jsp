@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>Login</title>
+	<title>Reset Password</title>
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -44,31 +44,24 @@
 		<div class="card">
 			
 			<div class="card-body">
+        		<h2>Reset Password</h2>
 				
-				
-				
-        		
-        		<h2>Login</h2>
-				
-				<form method="post" action="/project/login">
+				<form method="post" action="/project/reset_password">
+					<input type="hidden" name="email" value='${requestScope.acct.name}'>
+					<input type="hidden" name="token" value='${sessionScope.token}'>
 					<div class="form-group">
-						<label>Username : </label>
-						<input type="text" class="form-control" name="username" id="username" value='${param.username}' placeholder="Username">
-					</div>
+							<label>Password : </label>
+							<input type="password" class="form-control" name="password" maxlength='16' id="password" placeholder="Password (8 ~ 16 characters)">
+						</div>
+				
+						<div class="form-group">
+							<label>Confirm Password : </label>
+							<input type="password" class="form-control" name="password2" maxlength='16' id="password2" placeholder="Confirm Password">
+						</div>
 
-					<div class="form-group">
-						<label>Password : </label>
-						<input type="password" class="form-control" name="password" id="password" placeholder="Password">
-					</div>
-
-					<button type="submit" class="btn btn-primary">Login</button>
+					<button type="submit" class="btn btn-primary">Reset Password</button>
 				</form>
 				<br>
-
-				<h6>Not a member?
-					<a href="/project/register" class="card-link">Sign up</a>
-				</h6><br>
-				<h6><a href="/project/forgot.html" class="card-link">Forgot Password?</a></h6>
 			</div>
 		</div>
 	</div>

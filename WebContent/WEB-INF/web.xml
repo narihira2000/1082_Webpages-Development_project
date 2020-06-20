@@ -31,4 +31,19 @@
   			<form-error-page>/login_fail.html</form-error-page>
   		</form-login-config>
   </login-config>
+  
+  <context-param>
+  	<param-name>MAIL_USER</param-name>
+  	<param-value></param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>MAIL_PASSWORD</param-name>
+  	<param-value></param-value>
+  </context-param>
+  
+  <error-page>
+  	<error-code>403</error-code>
+  	<location>/403.html</location>
+  </error-page>
 </web-app>

@@ -1,4 +1,5 @@
 <%@taglib prefix="f" uri="https://project.com/jstl/fake" %>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,6 +69,13 @@
 		
 							<div class="card-body">
 								<h6>${reply.content}</h6><br>
+								<c:if test="${reply.username == sessionScope.login}">
+									<form method='post' action='del_reply'>
+		                        		<input type='hidden' name='millis' value='${reply.millis}'>
+		                        		<input type='hidden' name='ID' value='${requestScope.messages.ID}'>
+		                        		<button type="submit" class="btn btn-danger" style="float: right;">delete post</button>
+		                    		</form>
+        						</c:if>
 							</div>
 						</div>
 						<br>

@@ -70,16 +70,17 @@ public class ReplyDAOJdbcImpl implements ReplyDAO{
 	
 	@Override
 	public void deleteReplyBy (String username, String millis, int id) {
-		jdbcTemplate.update("DELETE FROM reply WHERE username = "+username+" AND time = " + millis + " AND message_id = " + id);
+		//jdbcTemplate.update("DELETE FROM reply WHERE username = "+username+" AND time = " + millis + " AND message_id = " + id);
 
-		/*try (Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement("DELETE FROM t_message WHERE name = ? AND time = ?")){
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement("DELETE FROM reply WHERE username = ? AND time = ? AND message_id = ?")){
 			stmt.setString (1, username); 
 			stmt.setLong (2, Long.parseLong (millis)); 
+			stmt.setInt(3, id);
 			stmt.executeUpdate(); 
 		} catch (SQLException e) { 
 			throw new RuntimeException (e);
-		}*/
+		}
 	}
 	
 	@Override 

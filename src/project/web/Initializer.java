@@ -31,5 +31,6 @@ public class Initializer implements ServletContextListener {
         MessageDAO messageDAO = new MessageDAOJdbcImpl(dataSource);
         ReplyDAO replyDAO = new ReplyDAOJdbcImpl(dataSource);
         context.setAttribute("userService", new UserService(acctDAO, messageDAO, replyDAO));
+        context.setAttribute("emailService", new GmailService(context.getInitParameter("MAIL_USER"),context.getInitParameter("MAIL_PASSWORD")));
     }
 }
