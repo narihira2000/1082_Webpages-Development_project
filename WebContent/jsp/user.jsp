@@ -3,7 +3,7 @@
 <html>
 <head>
 <head>
-	<title>${sessionScope.login}'s Blog</title>
+	<title>${requestScope.username}'s Blog</title>
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -19,18 +19,29 @@
 	 			<a class="nav-link" href="/project">Home</a>
 	 		</li>
 	 		
-	 		<li class="nav-item">
-	 			<a class="nav-link" href="member">My Blog</a>
-	 		</li>
-	 	
-	 		<li class="nav-item">
-	 			<a class="nav-link" href="logout">Logout</a>
-	 		</li>
-	 		
-	 		
+	 		<f:choose>
+		 		<f:when test='${sessionScope.login == null}'>
+		 			<li class="nav-item">
+						<a class="nav-link" href="/project/register">Sign up</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" href="/project/jsp/login.jsp">Login</a>
+					</li>
+		 		</f:when>
+		 		<f:otherwise>
+		 			<li class="nav-item">
+						<a class="nav-link" href="/project/member">My Blog</a>
+					</li>
+		 			<li class="nav-item">
+						<a class="nav-link" href="/project/logout">Logout</a>
+					</li>
+		 		</f:otherwise>
+	 		</f:choose>
 	 	</ul>
-	 	
-	 	<span style="color:white; " class="nav-item">Online: ${requestScope.onlineUser}<br>Hi, ${sessionScope.login}</span>
+	 	<f:if test="${sessionScope.login != null}">
+	 		<span style="color:white; " class="nav-item">Hi, ${sessionScope.login}</span>
+	 	</f:if>
 	</nav>
 	<br>
 	<br>
@@ -42,32 +53,12 @@
 			
 
 			<div class="col">
-				<h2>New Post</h2><br>
-				<form method="POST" action="new_message">
-					<f:if test="${param.title!=null}">
-						<h6 class="alert alert-danger">Title can't exceed 140 characters.</h6><br>
-        			</f:if>
-					<div class="card" style="padding: 2%;">
-						<div class="form-group">
-							<label for="inputTitle">Title</label>
-							<input type="text" class="form-control" name="title" id="imputTitle" value='${param.title}'>
-						</div>
-
-						<div class="form-group">
-							<label for="inputContent">Content</label>
-							<textarea class="form-control" rows="4" name="content" id="inputContent">${param.content}</textarea>
-						</div>
-						<button type="submit" class="btn btn-outline-primary btn-lg btn-block">+ add post</button><br>
-
-					</div>
-				</form>
-
-				<br><h2>All Posts</h2><br>
+				<br><h2>${requestScope.username}'s All Posts</h2><br>
 				
 		        <f:forEach var="message" items="${requestScope.messages}">
 			        <div class="card">
 						<div class="card-header" style="display:flex; align-items: center; justify-content: space-between;">
-							<form method='post' action='process_article'>
+							<form method='post' action='/project/process_article'>
 		                        <%-- <input type='hidden' name='title' value='${message.title}'>
 		                        <input type='hidden' name='content' value='${message.content}'> --%>
 		                        <input type='hidden' name='ID' value='${message.ID}'>
@@ -84,11 +75,7 @@
 	
 						<div class="card-body">
 							<h6>${message.content}</h6><br>
-							<form method='post' action='del_message'>
-		                        <input type='hidden' name='millis' value='${message.millis}'>
-		                        <input type='hidden' name='ID' value='${message.ID}'>
-		                        <button type="submit" class="btn btn-danger" style="float: right;">delete post</button>
-		                    </form>
+							
 						</div>
 					</div>
 					<br>

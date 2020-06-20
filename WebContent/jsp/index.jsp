@@ -11,21 +11,37 @@
   		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-	    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+	    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" style="display:flex; justify-content:space-between; justify-items:center;">
 	 	
 	 		<ul class="navbar-nav">
 				<li class="nav-item">
 	 				<a class="nav-link" href="">Home</a>
 	 			</li>
-	 		
-	 			<li class="nav-item">
-	 				<a class="nav-link" href="register">Sign up</a>
-	 			</li>
-	 		
-	 			<li class="nav-item">
-	 				<a class="nav-link" href="jsp/login.jsp">Login</a>
-	 			</li>
+	 			
+	 			<f:choose>
+		 			<f:when test='${sessionScope.login == null}'>
+		 				<li class="nav-item">
+			 				<a class="nav-link" href="register">Sign up</a>
+			 			</li>
+			 		
+			 			<li class="nav-item">
+			 				<a class="nav-link" href="jsp/login.jsp">Login</a>
+			 			</li>
+		 			</f:when>
+		 			<f:otherwise>
+		 				<li class="nav-item">
+			 				<a class="nav-link" href="member">My Blog</a>
+			 			</li>
+		 				<li class="nav-item">
+			 				<a class="nav-link" href="logout">Logout</a>
+			 			</li>
+		 			</f:otherwise>
+	 			</f:choose>
 	 		</ul>
+	 		
+	 		<f:if test="${sessionScope.login != null}">
+	 			<span style="color:white; " class="nav-item">Hi, ${sessionScope.login}</span>
+	 		</f:if>
 		</nav>
 		<br>
 		<br>

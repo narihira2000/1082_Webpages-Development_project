@@ -17,17 +17,35 @@
 	 		
 	 	<ul class="navbar-nav">
 			<li class="nav-item">
-	 			<a class="nav-link" href=logout>Home</a>
+	 			<a class="nav-link" href="/project">Home</a>
 	 		</li>
 	 	
-	 		<li class="nav-item">
-	 			<a class="nav-link" href="logout">Logout</a>
-	 		</li>
+	 		<f:choose>
+		 			<f:when test='${sessionScope.login == null}'>
+		 				<li class="nav-item">
+			 				<a class="nav-link" href="register">Sign up</a>
+			 			</li>
+			 		
+			 			<li class="nav-item">
+			 				<a class="nav-link" href="jsp/login.jsp">Login</a>
+			 			</li>
+		 			</f:when>
+		 			<f:otherwise>
+		 				<li class="nav-item">
+			 				<a class="nav-link" href="member">My Blog</a>
+			 			</li>
+		 				<li class="nav-item">
+			 				<a class="nav-link" href="logout">Logout</a>
+			 			</li>
+		 			</f:otherwise>
+	 			</f:choose>
 	 		
 	 		
 	 	</ul>
 	 	
-	 	<span style="color:white; " class="nav-item">Hi, ${sessionScope.login}</span>
+	 	<f:if test="${sessionScope.login != null}">
+	 		<span style="color:white; " class="nav-item">Hi, ${sessionScope.login}</span>
+	 	</f:if>
 	</nav>
 	<br>
 	<br>
@@ -82,18 +100,19 @@
 			        </f:forEach>
 		        </div>
 
-				
-				<form method="POST" action="new_reply">
-					<div class="card" style="padding: 2%;">
-						<input type='hidden' name='mID' value='${requestScope.messages.ID}'>
-						<div class="form-group">
-							<label for="inputContent">Content</label>
-							<textarea class="form-control" rows="4" name="content" id="inputContent"></textarea>
+				<f:if test="${sessionScope.login != null}">
+					<form method="POST" action="new_reply">
+						<div class="card" style="padding: 2%;">
+							<input type='hidden' name='mID' value='${requestScope.messages.ID}'>
+							<div class="form-group">
+								<label for="inputContent">Content</label>
+								<textarea class="form-control" rows="4" name="content" id="inputContent"></textarea>
+							</div>
+							<button type="submit" class="btn btn-outline-primary btn-lg btn-block">+ reply the post</button><br>
+	
 						</div>
-						<button type="submit" class="btn btn-outline-primary btn-lg btn-block">+ reply the post</button><br>
-
-					</div>
-				</form>
+					</form>
+				</f:if>
 				<br>
 			</div>
 		</div>

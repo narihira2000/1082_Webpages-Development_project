@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
     	@WebInitParam(name = "ARTICLE_PATH", value = "/jsp/article.jsp")
     }
 )
-@ServletSecurity(
-		@HttpConstraint(rolesAllowed = {"member"})
-)
+//@ServletSecurity(
+//		@HttpConstraint(rolesAllowed = {"member"})
+//)
 public class Article extends HttpServlet {
     
     protected void doGet(

@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
         @WebInitParam(name = "ARTICLE_PATH", value = "article")
     }
 )
-@ServletSecurity(
-		@HttpConstraint(rolesAllowed = {"member"})
-)
+//@ServletSecurity(
+//		@HttpConstraint(rolesAllowed = {"member"})
+//)
 public class ProcessArticle extends HttpServlet {
     
     protected void doPost(
