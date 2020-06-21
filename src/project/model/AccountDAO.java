@@ -4,6 +4,7 @@ import java.util.Optional;
 
 public interface AccountDAO {
     void createAccount(Account acct);
+    void setAccountAvatar(String username, byte[] image);
     Optional<Account> accountBy(String name);
     Optional<Account> accountByEmail(String email);
     void activateAccount(Account acct);

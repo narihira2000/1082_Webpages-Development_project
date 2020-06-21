@@ -68,7 +68,8 @@ public class AccountDAOJdbcImpl implements AccountDAO{
 						rs.getString(1),
 						rs.getString(2),
 						rs.getString(3),
-						rs.getString(4)
+						rs.getString(4),
+						rs.getBytes(5)
 				));
 			} else {
 				return Optional.empty();
@@ -89,7 +90,8 @@ public class AccountDAOJdbcImpl implements AccountDAO{
                     rs.getString(1),
                     rs.getString(2),
                     rs.getString(3),
-                    rs.getString(4)
+                    rs.getString(4),
+					rs.getBytes(5)
                 ));
             } else {
                 return Optional.empty();
@@ -126,6 +128,19 @@ public class AccountDAOJdbcImpl implements AccountDAO{
 	           throw new RuntimeException(e);
 	        } 
 		
+	}
+
+	@Override
+	public void setAccountAvatar(String username, byte[] image) {
+		
+		try(Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement("UPDATE user SET avatar = ? WHERE username = ?")){
+					stmt.setBytes(1, image);
+					stmt.setString(2, username);
+					stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
 

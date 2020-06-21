@@ -28,7 +28,23 @@
 	 		</li>
 	 		
 	 		
-	 	</ul>
+		 </ul>
+		 
+		 <ul class="navbar-nav ml-auto nav-flex-icons">
+			<li class="nav-item avatar dropdown">
+			
+			   <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					 <img src="data:image/jpg;base64,${sessionScope.UserAvatar}" class="rounded-circle z-depth-0" alt="avatar image" height="35">
+			   </a>
+			   
+			   <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink">
+				   <h5 class="dropdown-header">${sessionScope.login}</h5>
+				   <div class="dropdown-divider"></div>
+					 <a class="dropdown-item" href="jsp/set_avatar.jsp">Set avatar</a>
+			   </div>
+			   
+			 </li>
+		 </ul>
 	 	
 	 	<span style="color:white; " class="nav-item">Online: ${requestScope.onlineUser}<br>Hi, ${sessionScope.login}</span>
 	</nav>

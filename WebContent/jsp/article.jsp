@@ -44,6 +44,21 @@
 	 	</ul>
 	 	
 	 	<f:if test="${sessionScope.login != null}">
+		 	<ul class="navbar-nav ml-auto nav-flex-icons">
+		 		<li class="nav-item avatar dropdown">
+		 		
+	        		<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          			<img src="data:image/jpeg;base64,${sessionScope.UserAvatar}" class="rounded-circle z-depth-0" alt="avatar image" height="35">
+	        		</a>
+	        		
+	        		<div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink">
+	        			<h5 class="dropdown-header">${sessionScope.login}</h5>
+	        			<div class="dropdown-divider"></div>
+	          			<a class="dropdown-item" href="jsp/set_avatar.jsp">Set avatar</a>
+	        		</div>
+	        		
+	      		</li>
+	      	</ul>
 	 		<span style="color:white; " class="nav-item">Hi, ${sessionScope.login}</span>
 	 	</f:if>
 	</nav>
@@ -63,7 +78,7 @@
 						<h3>${requestScope.messages.title}</h3>
 						<div>
 							<h6>${requestScope.messages.localDateTime}</h6>
-							<h6 style="float:right;">Author : ${requestScope.messages.username} ID : ${requestScope.messages.ID}</h6>
+							<h6 style="float:right;">Author : <a href="/project/user/${requestScope.messages.username}">${requestScope.messages.username}</a></h6>
 						</div>
 					</div>
 
@@ -80,7 +95,7 @@
 					<f:forEach var="reply" items="${requestScope.replies}">
 				        <div class="card">
 							<div class="card-header" style="display:flex; align-items: center; justify-content: space-between;">
-								<h4>${reply.username}</h4>
+								<h4><a href="/project/user/${reply.username}">${reply.username}</a></h4>
 								<h6>${reply.localDateTime}</h6>
 							</div>
 		

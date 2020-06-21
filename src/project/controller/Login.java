@@ -38,6 +38,7 @@ public class Login extends HttpServlet {
                 request.changeSessionId();
             }
             request.getSession().setAttribute("login", username);
+            request.getSession().setAttribute("UserAvatar", userService.getUserAvatar(username));
             response.sendRedirect(getInitParameter("SUCCESS_PATH"));
         } catch(NoSuchElementException | ServletException e) {
             request.setAttribute("errors", Arrays.asList("登入失敗"));
