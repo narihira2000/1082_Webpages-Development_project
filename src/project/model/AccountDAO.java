@@ -9,4 +9,7 @@ public interface AccountDAO {
     Optional<Account> accountByEmail(String email);
     void activateAccount(Account acct);
 	void updatePasswordSalt(String email, String password, String salt);
+	void resetLoginFailTime(String username);
+	void setLoginFailed(String username, int failTime);
+	String getUserRole(String username);
 }

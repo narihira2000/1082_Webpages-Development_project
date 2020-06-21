@@ -69,7 +69,8 @@ public class AccountDAOJdbcImpl implements AccountDAO{
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
-						rs.getBytes(5)
+						rs.getBytes(5),
+						rs.getInt(6)
 				));
 			} else {
 				return Optional.empty();
@@ -91,7 +92,8 @@ public class AccountDAOJdbcImpl implements AccountDAO{
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-					rs.getBytes(5)
+					rs.getBytes(5),
+					rs.getInt(6)
                 ));
             } else {
                 return Optional.empty();
@@ -117,6 +119,7 @@ public class AccountDAOJdbcImpl implements AccountDAO{
 
 	@Override
 	public void updatePasswordSalt(String email, String password, String salt) {
+		System.out.println(email);
 		try(Connection conn = dataSource.getConnection();
 	            PreparedStatement stmt = conn.prepareStatement("UPDATE user SET password = ?, salt = ? WHERE email = ?")) {
 	            stmt.setString(1, password);
@@ -141,6 +144,47 @@ public class AccountDAOJdbcImpl implements AccountDAO{
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public void resetLoginFailTime(String username) {
+		try(Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement("UPDATE user SET failtime = ? WHERE username = ?")){
+					stmt.setInt(1, 0);
+					stmt.setString(2, username);
+					stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void setLoginFailed(String username, int failTime) {
+		try(Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement("UPDATE user SET failtime = ? WHERE username = ?")){
+					stmt.setInt(1, failTime);
+					stmt.setString(2, username);
+					stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+	@Override
+	public String getUserRole(String username) {
+		try(Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("SELECT role FROM user_role WHERE username = ?")) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+            	return rs.getString(1);
+            } else {
+            	return "";
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 	}
 }
 

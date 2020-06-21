@@ -6,14 +6,16 @@ public class Account {
     private String password;
     private String salt;
     private byte[] avatar;
+    private int loginFailTime;
 
     
-    public Account(String name, String email, String password, String salt, byte[] avatar) {
+    public Account(String name, String email, String password, String salt, byte[] avatar, int loginFailTime) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.salt = salt;
         this.avatar = avatar;
+        this.loginFailTime = loginFailTime;
     }
 
     public String getName() {
@@ -38,6 +40,10 @@ public class Account {
 
 	public void setAvatar(byte[] avatar) {
 		this.avatar = avatar;
+	}
+
+	public int getLoginFailTime() {
+		return loginFailTime;
 	}
 }
 

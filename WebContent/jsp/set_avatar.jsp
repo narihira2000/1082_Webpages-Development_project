@@ -21,11 +21,11 @@
 	 		</li>
 	 		
 	 		<li class="nav-item">
-	 			<a class="nav-link" href="member">My Blog</a>
+	 			<a class="nav-link" href="/project/member">My Blog</a>
 	 		</li>
 	 	
 	 		<li class="nav-item">
-	 			<a class="nav-link" href="logout">Logout</a>
+	 			<a class="nav-link" href="/project/logout">Logout</a>
 	 		</li>
 		 </ul>
 	 	

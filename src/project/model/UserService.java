@@ -49,7 +49,7 @@ public class UserService {
     private Account createUser(String username, String email, String password) {
         int salt = (int) (Math.random() * 100);
         int encrypt = salt + password.hashCode();
-        Account acct = new Account(username, email,String.valueOf(encrypt), String.valueOf(salt), avatar.getBytes());
+        Account acct = new Account(username, email,String.valueOf(encrypt), String.valueOf(salt), avatar.getBytes(), 0);
         acctDAO.createAccount(acct);
         return acct;
     }
@@ -164,6 +164,33 @@ public class UserService {
             return Optional.of(String.valueOf(password.hashCode() + salt));
         }
         return Optional.empty();
+	}
+	
+	public void resetLoginFailTime(String username) {
+		acctDAO.resetLoginFailTime(username);
+	}
+	
+	public int getLoginFailTime(String username) {
+		if(username == null || username.trim().length() == 0) {
+            return 99;
+        }
+    	Optional<Account> optionalAcct = acctDAO.accountBy(username);
+        if(optionalAcct.isPresent()) {
+        	Account acct = optionalAcct.get();
+        	int loginFailTime = acct.getLoginFailTime();
+        	return loginFailTime;
+        }
+        
+        return 99;
+	}
+
+	public void loginFailed(String username, int failTime) {
+		acctDAO.setLoginFailed(username, failTime);
+		
+	}
+
+	public String getUserRole(String username) {
+		return acctDAO.getUserRole(username);
 	}
 }
 

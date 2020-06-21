@@ -47,7 +47,8 @@
         		<h2>Reset Password</h2>
 				
 				<form method="post" action="/project/reset_password">
-					<input type="hidden" name="email" value='${requestScope.acct.name}'>
+					<input type="hidden" name="username" value='${requestScope.acct.name}'>
+					<input type="hidden" name="email" value='${requestScope.acct.email}'>
 					<input type="hidden" name="token" value='${sessionScope.token}'>
 					<div class="form-group">
 							<label>Password : </label>

@@ -46,6 +46,7 @@ public class ResetPassword extends HttpServlet {
             return;
         }
         
+        String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String password2 = request.getParameter("password2");
@@ -61,6 +62,7 @@ public class ResetPassword extends HttpServlet {
                    .forward(request, response);
         } else {
             userService.resetPassword(email, password);
+            userService.resetLoginFailTime(username);
             request.getRequestDispatcher("/jsp/reset_success.jsp")
                    .forward(request, response);
         }
